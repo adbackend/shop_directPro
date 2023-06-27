@@ -16,6 +16,8 @@ local.properties
 .classpath
 .project
 root-context.xml
+classes/
+target/
 
 
 # External tool builders
