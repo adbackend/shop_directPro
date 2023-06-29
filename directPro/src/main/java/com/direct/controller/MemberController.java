@@ -1,6 +1,13 @@
 package com.direct.controller;
 
+import java.security.SecureRandom;
+import java.security.SecureRandomParameters;
+
+import javax.mail.internet.MimeMessage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -18,6 +25,9 @@ public class MemberController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private JavaMailSender mailSender;
 	
 	//회원가입 페이지 이동
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
@@ -61,9 +71,43 @@ public class MemberController {
 	//이메일 인증
 	@ResponseBody
 	@RequestMapping(value = "/mailCheck", method = RequestMethod.GET)
-	public void mailCheckGET(String mail) throws Exception{
+	public String mailCheckGET(String mail) throws Exception{
 		log.info("이메일 데이터 전송 확인");
 		log.info("인증번호 : " + mail);
+		
+		SecureRandom random = new SecureRandom();
+		int mailAuthNumber = random.nextInt(888888)+111111; //난수 생성
+		
+		//이메일 전송
+		String from ="test@gmail.com";
+		String to = mail;
+		String title = "회원가입 인증 이메일 입니다.";
+		String content =
+				"홈페이지를 방문해 주셔서 감사합니다." +
+				"<br><br>" +
+				"인증번호는 " + mailAuthNumber + " 입니다. " +
+				"<br>" + 
+				"해당 인증번호를 확인란에 입력해주세요.";
+		
+		try {
+			
+			MimeMessage message = mailSender.createMimeMessage();
+			MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+			
+			helper.setFrom(from);
+			helper.setTo(to);
+			helper.setSubject(title);
+			helper.setText(content, true);
+			
+			mailSender.send(message);
+			
+		}catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		String mailAuth = Integer.toString(mailAuthNumber); 
+		
+		return mailAuth;
 		
 	}
 	

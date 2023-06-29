@@ -52,13 +52,14 @@
 					<input class="mail_input" name="memberMail">
 				</div>
 				<div class="mail_check_wrap">
-					<div class="mail_check_input_box">
+					<div class="mail_check_input_box" id="mail_check_input_box_false">
 						<input class="mail_check_input" disabled="disabled">
 					</div>
 					<div class="mail_check_button">
 						<span>인증번호 전송</span>
 					</div>
 					<div class="clearfix"></div>
+					<span id="mail_check_input_box_warn"></span>
 				</div>
 			</div>
 			<div class="address_wrap">
