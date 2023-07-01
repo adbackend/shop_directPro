@@ -43,5 +43,32 @@ public class MemberMapperTests {
 		memberMapper.idCheck(id);
 		memberMapper.idCheck(id2);
 	}
+	
+	//로그인
+	@Test
+	public void memberLoginTest() throws Exception{
+		
+		MemberVO member = new MemberVO();
+		
+		//일치하는 아이디, 비밀번호일 경우
+		member.setMemberId("admin1");
+		member.setMemberPw("1234");
+		
+		memberMapper.memberLogin(member);
+		
+		//불일치하는 아이디, 비밀번호일 경우
+		member.setMemberId("1111111");
+		member.setMemberPw("1111111");
+		
+		memberMapper.memberLogin(member);
+	}
 
 }
+
+
+
+
+
+
+
+

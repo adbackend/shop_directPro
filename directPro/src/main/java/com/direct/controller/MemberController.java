@@ -4,14 +4,18 @@ import java.security.SecureRandom;
 import java.security.SecureRandomParameters;
 
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.direct.model.MemberVO;
 import com.direct.service.MemberService;
@@ -29,6 +33,9 @@ public class MemberController {
 	@Autowired
 	private JavaMailSender mailSender;
 	
+	@Autowired
+	private BCryptPasswordEncoder pwEncoder;
+	
 	//회원가입 페이지 이동
 	@RequestMapping(value = "/join", method = RequestMethod.GET)
 	public void loginGET() {
@@ -40,6 +47,14 @@ public class MemberController {
 	//회원가입
 	@RequestMapping(value = "/join", method = RequestMethod.POST)
 	public String joinPOST(MemberVO memberVO) throws Exception{
+		
+		String rawPw = ""; //인코딩 전
+		String encodePw = ""; //인코딩 후
+		
+		rawPw = memberVO.getMemberPw();
+		encodePw = pwEncoder.encode(rawPw);
+		
+		memberVO.setMemberPw(encodePw);
 		
 		log.info("join 진입");
 		
@@ -118,6 +133,54 @@ public class MemberController {
 		
 		log.info("로그인 페이지 진입");
 		
-	}	
+	}
+	
+	//로그인 처리
+	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	public String loginPOST(HttpServletRequest request,
+							MemberVO memberVO, 
+							RedirectAttributes rttr) throws Exception{
+		
+		log.info("login 메서드 진입");
+		log.info(memberVO);
+		
+		HttpSession session = request.getSession();
+		
+		String rawPw = "";
+		String encodePw = "";
+		
+		MemberVO member = memberService.memberLogin(memberVO);
+		
+		if(member != null) { //일치하는 아이디 존재시
+			
+			rawPw = memberVO.getMemberPw(); //사용자가 제출항 비밀번호
+			encodePw = member.getMemberPw(); //db에서 가져온 인코딩된 비밀번호
+			
+			if(true == pwEncoder.matches(rawPw, encodePw)) { //비밀번호 일치여부 판단
+				
+				member.setMemberPw(""); //인코딩된 비밀번호 삭제(굳이 노출시킬 필요x)
+				session.setAttribute("member", member);
+				
+				return "redirect:/main";
+				
+			}else {
+				rttr.addFlashAttribute("result", 0);
+				return "redirect:/member/login";
+			}
+			
+		}else { //일치하는 아이디 미존재(= 로그인실패)
+			
+			rttr.addFlashAttribute("result", 0);
+			return "redirect:/member/login";
+			
+		}
+		
+	} //method end
 
 }
+
+
+
+
+
+

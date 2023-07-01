@@ -29,4 +29,16 @@
 		WHERE memberId = #{memberId}
 	</select>
 	
+	<!-- 로그인 -->
+	<select id="memberLogin" resultType="com.direct.model.MemberVO">
+		SELECT memberId,
+			   memberPw,
+			   memberName,
+			   adminck,
+			   money,
+			   point
+		FROM book_member 
+		WHERE memberId = #{memberId}
+	</select>
+
 </mapper>
