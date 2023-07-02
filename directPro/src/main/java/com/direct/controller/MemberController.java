@@ -131,17 +131,17 @@ public class MemberController {
 	@RequestMapping(value = "login", method = RequestMethod.GET)
 	public void joinGET() {
 		
-		log.info("로그인 페이지 진입");
+		log.info("로그인 페이지 진입 (GET방식)");
 		
 	}
 	
 	//로그인 처리
-	@RequestMapping(value = "/login", method = RequestMethod.POST)
+	@RequestMapping(value = "/login.do", method = RequestMethod.POST)
 	public String loginPOST(HttpServletRequest request,
 							MemberVO memberVO, 
 							RedirectAttributes rttr) throws Exception{
 		
-		log.info("login 메서드 진입");
+		log.info("login 메서드 진입 (POST방식)");
 		log.info(memberVO);
 		
 		HttpSession session = request.getSession();
@@ -176,6 +176,31 @@ public class MemberController {
 		}
 		
 	} //method end
+	
+	//로그아웃 GET방식
+	@RequestMapping(value = "/logout.do", method = RequestMethod.GET)
+	public String logoutMainGET(HttpServletRequest request) throws Exception{
+		
+		log.info("logoutMainGET 메서드 진입");
+		
+		HttpSession session = request.getSession();
+		
+		session.invalidate(); //세션 전체 무효화
+		
+		return "redirect:/main";
+	}
+	
+	//로그아웃 POST방식
+	@ResponseBody
+	@RequestMapping(value = "/logout.do", method = RequestMethod.POST)
+	public void logoutPOST(HttpServletRequest request) throws Exception{
+		
+		log.info("비동기 로그아웃 메서드 진입");
+		
+		HttpSession session = request.getSession();
+		session.invalidate();
+		
+	}
 
 }
 

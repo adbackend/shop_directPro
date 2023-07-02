@@ -14,7 +14,7 @@ function Login(){
 	this.loginProcess = function(){
 		let form = document.getElementById("login_form");
 		
-		form.action = "/member/login";
+		form.action = "/member/login.do";
 		form.submit();
 	}
 	

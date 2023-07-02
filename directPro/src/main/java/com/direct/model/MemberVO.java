@@ -1,10 +1,10 @@
 package com.direct.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.ToString;
 
 @Data
-@ToString
 public class MemberVO {
 	
 	private String memberId; //회원 id
