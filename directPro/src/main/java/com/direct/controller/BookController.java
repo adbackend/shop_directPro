@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class BookController {
-	
-	//메인페이지로 이동
+
+	// 메인페이지로 이동
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public void mainPageGET() {
-		
+
 	}
 
 }

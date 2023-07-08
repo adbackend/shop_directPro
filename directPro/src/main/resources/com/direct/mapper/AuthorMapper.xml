@@ -17,4 +17,8 @@
     						)
     </insert>
     
+    <select id="nationCodes" resultType="com.direct.model.NationVO">
+    	SELECT nationId, nationName  FROM nation
+    </select>
+    
 </mapper>
