@@ -17,8 +17,49 @@
     						)
     </insert>
     
+    <!-- 작가 코드성 데이터 -->
     <select id="nationCodes" resultType="com.direct.model.NationVO">
     	SELECT nationId, nationName  FROM nation
+    </select>
+    
+    <!-- 작가 목록 -->
+    <select id="authorGetList" resultType="com.direct.model.AuthorVO">
+    <![CDATA[
+    	SELECT * FROM(
+    		SELECT 
+    			/*+ INDEX_DESC(AUTHOR SYS_C0055680) */
+    			ROWNUM as rn,
+    			author.authorId,
+    			author.authorName,
+    			author.nationId,
+    			author.regDate,
+    			author.updateDate,
+                nation.nationName
+    		FROM author 
+    			INNER JOIN nation ON author.nationId = nation.nationId
+    		WHERE
+    ]]> 
+    		<if test="keyword != null">
+    			authorName LIKE '%'||#{keyword}||'%' AND
+    		</if>
+    <![CDATA[
+    		
+    		ROWNUM <= #{pageNum} * #{amount}
+    		)
+    	WHERE rn > (#{pageNum}-1) * #{amount}
+    			
+    ]]>		
+    	 	
+    </select>
+    
+    <!-- 작가 총 갯수 -->
+    <select id="authorGetTotal" resultType="int">
+    	
+    	SELECT COUNT(*) FROM author
+    	<if test="keyword != null">
+    		WHERE authorName LIKE '%'||#{keyword}||'%'
+    	</if>
+    	
     </select>
     
 </mapper>

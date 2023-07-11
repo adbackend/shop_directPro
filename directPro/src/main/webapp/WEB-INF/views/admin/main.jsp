@@ -16,7 +16,7 @@
     	<div>관리자 페이지 입니다.</div>
     </div>
               
-<%@ include file="../includes/header.jsp" %>
+<%@ include file="../includes/footer.jsp" %>
 
 </body>
 </html>

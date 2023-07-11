@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.direct.mapper.AuthorMapper;
 import com.direct.model.AuthorVO;
+import com.direct.model.Criteria;
 import com.direct.model.NationVO;
 
 @Service
@@ -22,10 +23,22 @@ public class AuthorServiceImpl implements AuthorService{
 		authorMapper.authorEnroll(authorVO);
 	}
 	
-	
+	//국가 코드
 	@Override
-	public List<HashMap<String, NationVO>> nationCodes() {
+	public List<HashMap<String, NationVO>> nationCodes() throws Exception {
 		return authorMapper.nationCodes();
+	}
+	
+	//작가 목록
+	@Override
+	public List<AuthorVO> authorGetList(Criteria cri) throws Exception {
+		return authorMapper.authorGetList(cri);
+	}
+	
+	//작가 총 갯수
+	@Override
+	public int authorGetTotal(Criteria cri) throws Exception {
+		return authorMapper.authorGetTotal(cri);
 	}
 	
 	

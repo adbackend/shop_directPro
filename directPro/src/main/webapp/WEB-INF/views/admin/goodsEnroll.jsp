@@ -20,6 +20,6 @@
     	<div class="admin_content_subject"><span>상품등록</span></div>
     </div>
               
-<%@ include file="../includes/header.jsp" %>
+<%@ include file="../includes/footer.jsp" %>
 </body>
 </html>
