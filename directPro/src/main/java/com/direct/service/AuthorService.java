@@ -16,5 +16,9 @@ public interface AuthorService {
 	public List<AuthorVO> authorGetList(Criteria cri) throws Exception; //작가 목록
 	
 	public int authorGetTotal(Criteria cri) throws Exception; //작가 총 갯수
+	
+	public AuthorVO authorGetDetail(int authorId)  throws Exception; //작가 상세
+	
+	public int authorModify(AuthorVO authorVO) throws Exception; //작가 수정
 
 }

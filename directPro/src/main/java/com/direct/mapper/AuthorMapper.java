@@ -16,5 +16,9 @@ public interface AuthorMapper {
 	public List<AuthorVO> authorGetList(Criteria cri); //작가 목록
 	
 	public int authorGetTotal(Criteria cri); //작가 총 갯수
+	
+	public AuthorVO authorGetDetail(int authorId); //작가상세
+	
+	public int authorModify(AuthorVO authroVO); //작가수정
 
 }

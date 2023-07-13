@@ -14,6 +14,23 @@
   integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
   crossorigin="anonymous"></script>
 <script src="/resources/js/admin/authorManage.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+	let mresult = ${modify_result};
+	
+	checkmResult(mresult);
+	
+	
+});
+
+function checkmResult(mresult){
+	if(mresult == '1'){
+		alert("작가 정보 수정 완료");
+	}else if(mresult == '0'){
+		alert("작가 수정 실패");
+	}
+}
+</script>
 </head>
 </head>
 <body>
@@ -37,7 +54,11 @@
 		    				<c:forEach var="list" items="${list}">
 		    					<tr>
 		    						<td><c:out value="${list.authorId}"/></td>
-		    						<td><c:out value="${list.authorName}"/></td>
+		    						<td>
+										<a class="move" href="<c:out value='${list.authorId}'/>">
+			    							<c:out value="${list.authorName}"/>
+										</a>
+			    					</td>
 		    						<td><c:out value="${list.nationName}"/></td>
 		    						<td><fmt:formatDate value="${list.regDate}" pattern="yyyy-MM-dd"/></td>
 		    						<td><fmt:formatDate value="${list.updateDate}" pattern="yyyy-MM-dd"/></td>

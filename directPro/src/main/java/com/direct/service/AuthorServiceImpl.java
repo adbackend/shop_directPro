@@ -41,5 +41,17 @@ public class AuthorServiceImpl implements AuthorService{
 		return authorMapper.authorGetTotal(cri);
 	}
 	
+	//작가 상세
+	@Override
+	public AuthorVO authorGetDetail(int authorId) throws Exception {
+		return authorMapper.authorGetDetail(authorId);
+	}
+	
+	
+	//작가 수정
+	@Override
+	public int authorModify(AuthorVO authorVO) throws Exception {
+		return authorMapper.authorModify(authorVO);
+	}
 	
 }

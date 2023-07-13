@@ -62,4 +62,31 @@
     	
     </select>
     
+    <!-- 작가 상세 -->
+    <select id="authorGetDetail" resultType="com.direct.model.AuthorVO">
+    	SELECT 
+    		authorId,
+    		authorName,
+    		nationId,
+    		authorIntro,
+    		regDate,
+    		updateDate
+    	FROM author
+    	WHERE authorId = #{authorId}
+    </select>
+    
+    <update id="authorModify">
+    	UPDATE author SET
+    		authorName = #{authorName},
+    		nationId = #{nationId},
+    		authorIntro = #{authorIntro},
+    		updateDate = sysdate
+    	WHERE authorId = #{authorId}
+    </update>
+    
 </mapper>
+
+
+
+
+

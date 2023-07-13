@@ -84,4 +84,39 @@ public class AuthorMapperTests {
     	
     }
     
+    //작가 상세
+    @Test
+    public void authorGetDetail() throws Exception{
+    	int authorId = 41;
+    	
+    	AuthorVO author = mapper.authorGetDetail(authorId);
+    	
+    	System.out.println(author);
+    }
+    
+    //작가 수정
+    @Test
+    public void authorModify() throws Exception{
+    	
+    	AuthorVO author = new AuthorVO();
+    	
+    	author.setAuthorId(41);
+    	System.out.println("수정전.." + mapper.authorGetDetail(author.getAuthorId()));
+    	
+    	author.setAuthorName("수정");
+    	author.setNationId("02");
+    	author.setAuthorIntro("수정내용");
+    	
+    	mapper.authorModify(author);
+    	
+    	System.out.println("수정후.." + mapper.authorGetDetail(author.getAuthorId()));
+    	
+    }
+    
+    
 }
+
+
+
+
+

@@ -1,3 +1,5 @@
+
+
 $(function(){
 
 	let result = "${enroll_result}";
@@ -14,6 +16,11 @@ $(function(){
 	//작가 검색 버튼
 	$(".search_btn").on("click", function(e){
 		authorManage.authorSearch(e);
+	});
+	
+	//작가 상세 버튼
+	$(".move").on("click", function(e){
+		authorManage.authorDetail(e);
 	});
 	
 	
@@ -54,7 +61,28 @@ function AuthorManage(){
 		
 		document.getElementById("search_pageNum").value = 1;
 		searchForm.submit();
-	}
+	} //function end
+	
+	//작가 상세
+	this.authorDetail = function(e){
+		e.preventDefault();
+		
+		let pageFormAu = document.getElementById("pageForm");
+		let input = document.createElement("input");
+		
+		let urlValue = e.target.href.split("/").reverse()[0];
+		
+		input.type="hidden";
+		input.id="authorId"		
+		input.name="authorId";
+		input.value=urlValue
+				
+		pageFormAu.appendChild(input);
+		
+		pageForm.action = "/admin/authorDetail";
+		pageForm.submit();
+		
+	} //function end
 	
 } //function end
 
