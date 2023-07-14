@@ -15,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.direct.model.AuthorVO;
+import com.direct.model.BookVO;
 import com.direct.model.Criteria;
 import com.direct.model.NationVO;
 import com.direct.model.PageMakeDTO;
+import com.direct.service.AdminService;
 import com.direct.service.AuthorService;
 
 import lombok.extern.log4j.Log4j;
@@ -32,6 +34,9 @@ public class AdminController {
 	
 	@Autowired
 	private AuthorService authorService;
+	
+	@Autowired
+	private AdminService adminService;
 	
 	public AdminController() {
 	}
@@ -59,6 +64,19 @@ public class AdminController {
 	public void goodsEnrollGET() throws Exception{
 		
 		log.info("상품 등록 페이지 접속");
+	}
+	
+	//상풍등록 POST
+	@PostMapping("/goodsEnroll")
+	public String goodsEnrollPOST(BookVO bookVO, RedirectAttributes rttr) {
+		
+		log.info("상품 등록 POST");
+		
+		adminService.bookEnroll(bookVO);
+		
+		rttr.addFlashAttribute("enroll_result", bookVO.getBookName());
+		
+		return "redirect:/admin/goodsManage";
 	}
 	
 	//상품관리

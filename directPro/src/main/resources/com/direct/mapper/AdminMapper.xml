@@ -4,8 +4,31 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.direct.mapper.AdminMapper">
 	
-    <!-- 작가 등록 -->
-    
+    <!-- 상품 등록 -->
+    <insert id="bookEnroll">
+    	INSERT INTO book (	bookName,
+    						authorId,
+    						publeYear,
+    						publisher,
+    						cateCode,
+    						bookPrice,
+    						bookStock,
+    						bookDiscount,
+    						bookIntro,
+    						bookContents
+    					)
+    			VALUES (	#{bookName},
+    						#{authorId},
+    						#{publeYear},
+    						#{publisher},
+    						#{cateCode},
+    						#{bookPrice},
+    						#{bookStock},
+    						#{bookDiscount},
+    						#{bookIntro},
+    						#{bookContents}
+    				)
+    </insert>
     
 </mapper>
 

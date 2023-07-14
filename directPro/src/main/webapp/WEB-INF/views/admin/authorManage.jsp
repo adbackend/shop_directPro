@@ -19,8 +19,6 @@ $(document).ready(function(){
 	let mresult = ${modify_result};
 	
 	checkmResult(mresult);
-	
-	
 });
 
 function checkmResult(mresult){
@@ -31,8 +29,7 @@ function checkmResult(mresult){
 	}
 }
 </script>
-</head>
-</head>
+
 <body>
 
 <%@ include file="../includes/header.jsp" %>

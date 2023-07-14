@@ -7,3 +7,4 @@ public interface AdminMapper {
 	public void bookEnroll(BookVO book); //상품 등록
 
 }
+ 
