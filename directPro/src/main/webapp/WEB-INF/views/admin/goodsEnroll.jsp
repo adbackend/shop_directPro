@@ -63,6 +63,7 @@ function checkResult(result){
 <%@ include file="../includes/header.jsp" %>
 
     <div class="admin_content_wrap">
+    <input type="hidden" id="cateList" value='${cateList}'/>
     	<div class="admin_content_subject"><span>상품등록</span></div>
     	<div class="admin_content_main">
 	         <form action="/admin/goodsEnroll" method="post" id="enrollForm">
@@ -72,6 +73,7 @@ function checkResult(result){
 	         		</div>
 	         		<div class="form_section_content">
 	         			<input name="bookName">
+	         			<span class="ck_warn bookName_warn">책 이름을 입력해주세요.</span>
 	         		</div>
 	         	</div>
 	         	<div class="form_section">
@@ -82,6 +84,7 @@ function checkResult(result){
 						<input id="authorName" readonly="readonly"/>
 						<input type="hidden" id="authorId" name="authorId"/>
 						<button class="authorId_btn">작가선택</button>
+						<span class="ck_warn authorId_warn">작가를 선택해주세요</span>
 	         		</div>
 	         	</div>            
 	         	<div class="form_section">
@@ -90,6 +93,7 @@ function checkResult(result){
 	         		</div>
 	         		<div class="form_section_content">
 	         			<input id="publeYear" name="publeYear" autocomplete="off" readonly="readonly">
+	         			<span class="ck_warn publeYear_warn">출판일을 선택해주세요.</span>
 	         		</div>
 	         	</div>            
 	         	<div class="form_section">
@@ -98,6 +102,7 @@ function checkResult(result){
 	         		</div>
 	         		<div class="form_section_content">
 	         			<input name="publisher">
+	         			<span class="ck_warn publisher_warn">출판사를 입력해주세요.</span>
 	         		</div>
 	         	</div>             
 	         	<div class="form_section">
@@ -105,7 +110,25 @@ function checkResult(result){
 	         			<label>책 카테고리</label>
 	         		</div>
 	         		<div class="form_section_content">
-	         			<input name="cateCode">
+	         			<div class="cate_wrap">
+	         				<span>대분류</span>
+	         				<select id="cate1">
+	         					<option selected value="none">선택</option>
+	         				</select>
+	         			</div>
+	         			<div class="cate_wrap">
+	         				<span>중분류</span>
+	         				<select id="cate2">
+	         					<option selected value="none">선택</option>
+	         				</select>
+	         			</div>
+	         			<div class="cate_wrap">
+	         				<span>소분류</span>
+	         				<select id="cate3" name="cateCode">
+	         					<option selected value="none">선택</option>
+	         				</select>
+	         			</div>
+	         			<span class="ck_warn cateCode_warn">카테고리를 선택해주세요.</span> 
 	         		</div>
 	         	</div>          
 	         	<div class="form_section">
@@ -113,7 +136,8 @@ function checkResult(result){
 	         			<label>상품 가격</label>
 	         		</div>
 	         		<div class="form_section_content">
-	         			<input name="bookPrice" value="0">
+	         			<input id="bookPrice" name="bookPrice" value="0">
+	         			<span class="ck_warn bookPrice_warn">상품 가격을 입력해주세요.</span>
 	         		</div>
 	         	</div>               
 	         	<div class="form_section">
@@ -122,6 +146,7 @@ function checkResult(result){
 	         		</div>
 	         		<div class="form_section_content">
 	         			<input name="bookStock" value="0">
+	         			<span class="ck_warn bookStock_warn">상품 재고를 입력해주세요.</span>
 	         		</div>
 	         	</div>          
 	         	<div class="form_section">
@@ -129,23 +154,28 @@ function checkResult(result){
 	         			<label>상품 할인율</label>
 	         		</div>
 	         		<div class="form_section_content">
-	         			<input name="bookDiscount" value="0">
+	         			<input id="discount_interface" maxlength="2" value="0"/>
+	         			<input type="hidden" id="bookDiscount" name="bookDiscount" value="0">
+	         			<span class="step_val">할인적용 가격 : <span class="span_discount" id="span_discount"></span></span>
+	         			<span class="ck_warn bookDiscount_warn">1~99 숫자를 입력해주세요.</span>
 	         		</div>
 	         	</div>          		
 	         	<div class="form_section">
 	         		<div class="form_section_title">
 	         			<label>책 소개</label>
 	         		</div>
-	         		<div class="form_section_content">
-						<textarea name="bookIntro" id="bookIntro_textarea"></textarea>	         			
+	         		<div class="form_section_content bit">
+						<textarea name="bookIntro" id="bookIntro_textarea"></textarea>	  
+						<span class="ck_warn bookIntro_warn">책 소개를 입력해주세요.</span>       			
 	         		</div>
 	         	</div>        		
 	         	<div class="form_section">
 	         		<div class="form_section_title">
 	         			<label>책 목차</label>
 	         		</div>
-	         		<div class="form_section_content">
+	         		<div class="form_section_content bct">
 						<textarea name="bookContents" id="bookContents_textarea"></textarea>
+						<span class="ck_warn bookContents_warn">책 목차를 입력해주세요.</span>
 	         		</div>
 	         	</div>
 	         </form>

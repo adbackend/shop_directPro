@@ -30,6 +30,72 @@
     				)
     </insert>
     
+    <!-- 카테고리 목록 -->
+    <select id="cateList" resultType="com.direct.model.CateVO">
+    	SELECT tier,
+    		   cateName,
+    		   cateCode,
+    		   cateParent
+    	FROM bcate ORDER BY cateCode
+    </select>
+    
+    <!-- 상품 목록 -->
+    <select id="goodsGetList" resultType="com.direct.model.BookVO">
+    <![CDATA[
+	    SELECT * FROM(
+	    	SELECT
+	    		/*+INDEX_DESC(book SYS_C0056652) */ ROWNUM as rn,
+	    		bookID,
+	    		bookName,
+	    		(SELECT authorName FROM author WHERE book.authorId = author.authorId) authorName,
+	    		(SELECT cateName FROM bcate WHERE book.cateCode = bcate.cateCode) cateName,
+	    		bookStock,
+	    		regDate
+	    	FROM book
+	    	WHERE
+    ]]>
+	   		<if test="keyword != null">
+	   			bookName LIKE '%' || #{keyword} || '%' AND
+	   		</if>
+   	<![CDATA[
+	   		ROWNUM <= #{pageNum} * #{amount}
+	   		)
+	   	WHERE rn > (#{pageNum}-1) * #{amount}
+   	]]>
+   	
+    </select>
+    
+    <!-- 상품 총 갯수 -->
+    <select id="goodsGetTotal" resultType="int">
+    
+    	SELECT COUNT(*)
+    	FROM book
+    	<if test="keyword != null">
+    		WHERE bookName LIKE '%'||#{keyword}||'%'
+    	</if>
+    	
+    </select>
+    
+    <!-- 상품 상세 -->
+    <select id="goodsGetDetail" resultType="com.direct.model.BookVO">
+    	SELECT bookId,
+    		   bookName,
+    		   (SELECT authorName FROM author WHERE author.authorId = book.authorId) authorName,
+    		   authorId,
+    		   publeYear,
+    		   publisher,
+    		   cateCode,
+    		   bookPrice,
+    		   bookStock,
+    		   bookDiscount,
+    		   bookIntro,
+    		   bookContents,
+    		   regDate,
+    		   updateDate
+    	FROM book
+    	WHERE bookId = #{bookId}
+    </select>
+    
 </mapper>
 
 

@@ -16,11 +16,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.direct.model.AuthorVO;
 import com.direct.model.BookVO;
+import com.direct.model.CateVO;
 import com.direct.model.Criteria;
 import com.direct.model.NationVO;
 import com.direct.model.PageMakeDTO;
 import com.direct.service.AdminService;
 import com.direct.service.AuthorService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import lombok.extern.log4j.Log4j;
 import lombok.extern.slf4j.Slf4j;
@@ -61,9 +63,21 @@ public class AdminController {
 	
 	//상품등록
 	@RequestMapping(value = "/goodsEnroll", method = RequestMethod.GET)
-	public void goodsEnrollGET() throws Exception{
+	public void goodsEnrollGET(Model model) throws Exception{
 		
 		log.info("상품 등록 페이지 접속");
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		List<CateVO> list = adminService.cateList();
+		
+		String cateList = objectMapper.writeValueAsString(list);
+		
+		log.info("json 형식 변경전.. " + list);
+		log.info("json 형식 변경후.. " + cateList);
+		
+		model.addAttribute("cateList", cateList);
+		
 	}
 	
 	//상풍등록 POST
@@ -81,9 +95,58 @@ public class AdminController {
 	
 	//상품관리
 	@RequestMapping(value = "/goodsManage", method = RequestMethod.GET)
-	public void goodsManageGET() throws Exception{
+	public void goodsManageGET(Criteria cri, Model model) throws Exception{
 		
-		log.info("상품관리 페이지 접속");
+		log.info("상품관리 페이지 진입");
+		
+		List<BookVO> list = adminService.goodsGetList(cri); //상품목록
+		
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+		}else {
+			model.addAttribute("listCheck", "empty");
+			return ;
+		}
+		
+		model.addAttribute("pageMaker", new PageMakeDTO(cri, adminService.goodsGetTotal(cri)));
+		
+	}
+	
+	//상품상세
+	@GetMapping("/goodsDetail")
+	public void goodsGetInfoGET(int bookId, Criteria cri, Model model) throws Exception{
+		
+		log.info("상품상세 페이지 진입");
+		
+		ObjectMapper objectMapper = new ObjectMapper();
+		
+		model.addAttribute("cateList", objectMapper.writeValueAsString(adminService.cateList()));
+		
+		model.addAttribute("cri", cri);
+		
+		BookVO bookVO = adminService.goodsGetDetail(bookId);
+		
+		model.addAttribute("goodsInfo", bookVO);
+	}
+	
+	
+	//작가 팝업창
+	@GetMapping("/authorPop")
+	public void authorPopGET(Criteria cri, Model model) throws Exception{
+		
+		log.info("작가 팝업창");
+			
+		cri.setAmount(5); // 5개 목록 출력
+		List<AuthorVO> list = authorService.authorGetList(cri);
+		
+		if(!list.isEmpty()) {
+			model.addAttribute("list", list);
+		}else {
+			model.addAttribute("listCheck", "empty");
+		}
+		
+		model.addAttribute("pageMaker", new PageMakeDTO(cri, authorService.authorGetTotal(cri)));
+		
 	}
 	
 	//작가등록

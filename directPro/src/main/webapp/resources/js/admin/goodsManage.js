@@ -1,32 +1,29 @@
 $(function(){
 
-	let result = "${enroll_result}";
+	goodsManage = new GoodsManage();
 
-	authorManage = new AuthorManage();
-	
-	checkResult(result);
 	
 	//페이지 번호 클릭시, 페이지 이동
 	$(".pageMaker_btn a").on("click", function(e){
-		authorManage.pageNavigation(e);	
+		goodsManage.pageNavigation(e);	
 	});
 	
-	//작가 검색 버튼
+	//상품 검색 버튼
 	$(".search_btn").on("click", function(e){
-		authorManage.authorSearch(e);
+		goodsManage.goodsSearch(e);
 	});
 	
-	//작가 상세 버튼
+	//상품 상세 버튼
 	$(".move").on("click", function(e){
-		authorManage.authorDetail(e);
+		goodsManage.goodsDetail(e);
 	});
 	
 	
 }); //function end
 
-function AuthorManage(){
+function GoodsManage(){
 
-	let pageForm = document.getElementById("pageForm"); //페이징
+	let moveForm = document.getElementById("moveForm"); //페이징
 
 	//페이지 번호 클릭시, 페이지 이동
 	this.pageNavigation = function(e){
@@ -37,16 +34,15 @@ function AuthorManage(){
 		
 		document.getElementById("pageNum").value = hrefValue.split("/").reverse()[0];
 		
-		pageForm.action = "/admin/authorManage";
-		pageForm.submit();
+		moveForm.submit();
 		
 	} //function end
 	
 	
 	let searchForm = document.getElementById("searchForm"); //작가 검색
 	
-	//작가 검색
-	this.authorSearch = function(e){
+	//상품 검색
+	this.goodsSearch = function(e){
 		
 		let keyword = document.getElementById("keyword").value;
 	
@@ -59,10 +55,12 @@ function AuthorManage(){
 		
 		document.getElementById("search_pageNum").value = 1;
 		searchForm.submit();
+		
 	} //function end
 	
-	//작가 상세
-	this.authorDetail = function(e){
+	
+	//상품 상세
+	this.goodsDetail = function(e){
 		e.preventDefault();
 		
 		let pageFormAu = document.getElementById("pageForm");
@@ -71,25 +69,16 @@ function AuthorManage(){
 		let urlValue = e.target.href.split("/").reverse()[0];
 		
 		input.type="hidden";
-		input.id="authorId"		
-		input.name="authorId";
+		input.id="bookId"		
+		input.name="bookId";
 		input.value=urlValue
 				
 		pageFormAu.appendChild(input);
 		
-		pageForm.action = "/admin/authorDetail";
-		pageForm.submit();
+		pageFormAu.action = "/admin/goodsDetail";
+		pageFormAu.submit();
 		
 	} //function end
 	
 } //function end
 
-
-function checkResult(result){
-	
-	if(result === ""){
-		return ;
-	}
-	
-	alert("작가"+ result +"을 등록하였습니다.");
-}

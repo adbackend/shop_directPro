@@ -19,6 +19,7 @@
  
 <%@ include file="../includes/header.jsp" %>
     <div class="admin_content_wrap">
+
         <div class="admin_content_subject"><span>작가 등록</span></div>
         <div class="admin_content_main">
         	<form id="enrollForm" action="/admin/authorEnroll.do" method="post">
