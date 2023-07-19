@@ -23,7 +23,7 @@ $(function(){
 
 function GoodsManage(){
 
-	let moveForm = document.getElementById("moveForm"); //페이징
+	let moveForm = document.getElementById("pageForm"); //페이징
 
 	//페이지 번호 클릭시, 페이지 이동
 	this.pageNavigation = function(e){

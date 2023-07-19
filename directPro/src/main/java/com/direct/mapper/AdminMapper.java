@@ -18,5 +18,8 @@ public interface AdminMapper {
 	
 	public BookVO goodsGetDetail(int bookId); //상품상세
 
+	public int goodsModify(BookVO book); //상품수정
+	
+	public int goodsDelete(int bookId); //상품삭제
+	
 }
- 

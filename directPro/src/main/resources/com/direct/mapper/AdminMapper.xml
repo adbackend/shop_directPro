@@ -96,6 +96,29 @@
     	WHERE bookId = #{bookId}
     </select>
     
+    <!-- 상품수정 -->
+    <update id="goodsModify">
+    	UPDATE book SET bookName = #{bookName},
+    					authorId = #{authorId},
+    					publeYear = #{publeYear},
+    					publisher = #{publisher},
+    					cateCode = #{cateCode},
+    					bookPrice = #{bookPrice},
+    					bookStock = #{bookStock},
+    					bookDiscount = #{bookDiscount},
+    					bookIntro = #{bookIntro},
+    					bookContents = #{bookContents},
+    					updateDate = sysdate
+    	WHERE bookId = #{bookId}
+    					
+    </update>
+    
+    <!-- 상품삭제 -->
+    <delete id="goodsDelete">
+    	DELETE FROM book 
+    	WHERE bookId = #{bookId}
+    </delete>
+    
 </mapper>
 
 

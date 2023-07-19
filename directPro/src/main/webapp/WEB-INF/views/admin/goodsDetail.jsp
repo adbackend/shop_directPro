@@ -19,13 +19,14 @@
 </script>
 <body>
 	<%@ include file="../includes/header.jsp"%>
-
+	
 	<div class="admin_content_wrap">
 		<div class="admin_content_subject">
 			<span>상품 상세</span>
 		</div>
 
 		<div class="admin_content_main">
+			<input type="hidden" id="h_bookId" value="${goodsInfo.bookId}"/>
 			<input type="hidden" id="cateList" value='${cateList}'/>
 			<div class="form_section">
 				<div class="form_section_title">
@@ -146,15 +147,15 @@
 
 			<div class="btn_section">
 				<button id="cancelBtn" class="btn">상품 목록</button>
-				<button id="enrollBtn" class="btn enroll_btn">수정</button>
+				<button id="modifyBtn" class="btn enroll_btn">수정</button>
 			</div>
 		</div>
 
 
-		<form id="moveForm" action="/admin/goodsManage" method="get">
-			<input type="hidden" name="pageNum" value="${pageMaker.cri.pageNum}">
-			<input type="hidden" name="amount" value="${pageMaker.cri.amount}">
-			<input type="hidden" name="keyword" value="${pageMaker.cri.keyword}">
+		<form id="moveForm" method="get">
+			<input type="hidden" name="pageNum" value="${cri.pageNum}">
+			<input type="hidden" name="amount" value="${cri.amount}">
+			<input type="hidden" name="keyword" value="${cri.keyword}">
 		</form>
 
 	</div>

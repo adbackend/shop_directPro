@@ -113,7 +113,7 @@ public class AdminController {
 	}
 	
 	//상품상세
-	@GetMapping("/goodsDetail")
+	@GetMapping({"/goodsDetail", "/goodsModify"})
 	public void goodsGetInfoGET(int bookId, Criteria cri, Model model) throws Exception{
 		
 		log.info("상품상세 페이지 진입");
@@ -127,6 +127,36 @@ public class AdminController {
 		BookVO bookVO = adminService.goodsGetDetail(bookId);
 		
 		model.addAttribute("goodsInfo", bookVO);
+	}
+	
+	//상품 수정
+	@PostMapping("/goodsModify")
+	public String goodsModifyPOST(BookVO bookVO, RedirectAttributes rttr) throws Exception{
+		
+		log.info("goodModifyPOST.." + bookVO);
+		
+		int result = adminService.goodsModify(bookVO);
+		
+		rttr.addFlashAttribute("modify_result", result);
+		
+		return "redirect:/admin/goodsManage";
+		
+	}
+	
+	//상품 삭제
+	@PostMapping("/goodsDelete")
+	public String goodsDeletePOST(int bookId, RedirectAttributes rttr) {
+		
+		log.info("goodsDelete POST..");
+		
+		int result = adminService.goodsDelete(bookId);
+		
+		rttr.addFlashAttribute("delete_result", result);
+		
+		log.info("상품 삭제 완료 bookId = {}", bookId);
+		
+		return "redirect:/admin/goodsManage";
+		
 	}
 	
 	

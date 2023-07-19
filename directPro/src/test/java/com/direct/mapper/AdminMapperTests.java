@@ -72,5 +72,50 @@ public class AdminMapperTests {
 		System.out.println(mapper.goodsGetDetail(bookId));
 		
 	}
+	
+	//상품 수정
+	@Test
+	public void goodsModifyTest() {
+		
+		BookVO bookVO = new BookVO();
+		
+		bookVO.setBookId(155);
+		bookVO.setBookName("mapper 테스트");
+		bookVO.setAuthorId(61);
+		bookVO.setPubleYear("2023-07-01");
+		bookVO.setPublisher("수정 출판사");
+		bookVO.setCateCode("204000");
+		bookVO.setBookPrice(20000);
+		bookVO.setBookStock(300);
+		bookVO.setBookDiscount(0.11);
+		bookVO.setBookIntro("책소개 수정");
+		bookVO.setBookContents("책목차 수정");
+
+		mapper.goodsModify(bookVO);
+		
+	}
+	
+	//상품 삭제
+	@Test
+	public void goodsDeleteTest() {
+		
+		int bookId = 156;
+		
+		int result = mapper.goodsDelete(bookId);
+		
+		if(result == 1) {
+			System.out.println(bookId + "글 내용 삭제 성공");
+		}
+		
+	}
 
 }
+
+
+
+
+
+
+
+
+

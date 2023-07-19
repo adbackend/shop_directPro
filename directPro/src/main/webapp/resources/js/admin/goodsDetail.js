@@ -22,6 +22,7 @@ $(function(){
 	});	
 
 	goodsDetail = new GoodsDetail();
+
 	
 	//할인율 가공
 	let discount = document.getElementById("discount").value;
@@ -34,6 +35,17 @@ $(function(){
 	publeYear = publeYear.substring(0, yearLength);
 	
 	document.getElementById("publeYear").value = publeYear;
+	
+	//상품목록 이동
+	$("#cancelBtn").on("click", function(e){
+		goodsDetail.goodsManageList(e);
+	});
+	
+	//수정페이지 이동
+	$("#modifyBtn").on("click", function(e){
+		goodsDetail.goodsModify(e);
+	});
+	
 	
 
 });
@@ -56,6 +68,33 @@ function makeCateArray(obj, array, cateList, tier){
 }
 
 function GoodsDetail(){
+
+	let moveForm = document.getElementById("moveForm");
+	
+	//목록으로 이동
+	this.goodsManageList = function(e){
+		e.preventDefault();
+		moveForm.action = "/admin/goodsManage";
+		moveForm.submit();
+	}
+	
+	//수정페이지 이동
+	this.goodsModify = function(e){
+		e.preventDefault();
+		
+		let bookId = document.getElementById("h_bookId").value;
+		let input = document.createElement("input");
+		
+		input.type = "hidden";
+		input.id = "bookId";
+		input.name = "bookId";
+		input.value = bookId;
+		
+		moveForm.appendChild(input);
+		moveForm.action = "/admin/goodsModify"
+		moveForm.submit();
+				
+	}
 
 	let cateList = document.getElementById("cateList").value; //카테고리
 	cateList = JSON.parse(cateList); //json 파싱

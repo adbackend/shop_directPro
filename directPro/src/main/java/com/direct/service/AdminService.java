@@ -17,5 +17,9 @@ public interface AdminService {
 	public int goodsGetTotal(Criteria cri); //상품 총 갯수
 	
 	public BookVO goodsGetDetail(int bookId); //상품 상세
+	
+	public int goodsModify(BookVO bookVO); //상품 수정
+	
+	public int goodsDelete(int bookId); //상품 삭제
 
 }

@@ -44,7 +44,6 @@ $(function(){
 	
 	$("#bookPrice").on("change", function(){
 		calcRate();
-		
 	});
 	
 	
