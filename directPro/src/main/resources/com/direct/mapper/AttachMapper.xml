@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.direct.mapper.AttachMapper">
+	
+	<!-- 상품 이미지 -->
+    <select id="getAttachList" resultType="com.direct.model.AttachImageVO">
+    
+    	SELECT * FROM image
+    	WHERE bookId = #{bookId}
+    	
+    </select>
+    
+</mapper>
+
+
+
+
+

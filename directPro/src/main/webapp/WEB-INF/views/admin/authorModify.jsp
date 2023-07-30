@@ -83,13 +83,14 @@
      		<div class="btn_section">
        			<button id="cancelBtn" class="btn">취소</button>
             	<button id="modifyBtn" class="btn modify_btn">수정</button>
+            	<button id="deleteBtn" class="btn delete_btn">삭제</button>
             </div> 
         </form>
     </div>                    
 </div>
 
-<form id="moveForm" method="get">
-	<input type="hidden" name="authorId" value='<c:out value="${authorInfo.authorId }"/>'>
+<form id="moveForm">
+	<input type="hidden" id="authorId" name="authorId" value='<c:out value="${authorInfo.authorId }"/>'>
 	<input type="hidden" name="pageNum" value='<c:out value="${cri.pageNum }"/>'>
 	<input type="hidden" name="amount" value='<c:out value="${cri.amount }"/>' >
 	<input type="hidden" name="keyword" value='<c:out value="${cri.keyword }"/>'>

@@ -75,6 +75,7 @@
     	WHERE authorId = #{authorId}
     </select>
     
+    <!-- 작가 수정 -->
     <update id="authorModify">
     	UPDATE author SET
     		authorName = #{authorName},
@@ -83,6 +84,12 @@
     		updateDate = sysdate
     	WHERE authorId = #{authorId}
     </update>
+    
+    <!-- 작가 삭제 -->
+    <delete id="authorDelete">
+    	DELETE FROM author 
+    	WHERE authorId = #{authorId}
+    </delete>
     
 </mapper>
 

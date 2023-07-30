@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import com.direct.model.AttachImageVO;
 import com.direct.model.BookVO;
 import com.direct.model.Criteria;
 
@@ -18,23 +19,28 @@ public class AdminMapperTests {
 	@Autowired
 	private AdminMapper mapper;
 	
+	//상품등록
 	@Test
 	public void bookEnrollTest() throws Exception{
 		
 		BookVO bookVO = new BookVO();
 		
-		bookVO.setBookName("책이름 test");
-		bookVO.setAuthorId(41);
+		bookVO.setBookName("책이름 test2");
+		bookVO.setAuthorId(16521);
 		bookVO.setPubleYear("2023-07-14");
 		bookVO.setPublisher("출판사 test");
-		bookVO.setCateCode("0231");
+		bookVO.setCateCode("204003");
 		bookVO.setBookPrice(9999);
 		bookVO.setBookStock(99);
 		bookVO.setBookDiscount(0.23);
 		bookVO.setBookIntro("책소개 test");
 		bookVO.setBookContents("책목자 test");
 		
+		System.out.println("before bookVO : " + bookVO);
+		
 		mapper.bookEnroll(bookVO);
+		
+		System.out.println("after bookVO : " + bookVO);
 		
 	}
 	
@@ -109,6 +115,20 @@ public class AdminMapperTests {
 		
 	}
 
+	//이미지 업로드
+	@Test
+	public void imageEnrollTest() {
+		
+		AttachImageVO vo = new AttachImageVO();
+		
+		vo.setBookId(128);
+		vo.setFileName("test");
+		vo.setUploadPath("test");
+		vo.setUuid("test");
+		
+		mapper.imageEnroll(vo);
+		
+	}
 }
 
 

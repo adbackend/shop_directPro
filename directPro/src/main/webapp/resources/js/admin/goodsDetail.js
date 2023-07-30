@@ -1,4 +1,7 @@
 $(function(){
+	
+	imageList();
+	
 	/* 책 소개 */
 	ClassicEditor
 		.create(document.querySelector('#bookIntro_textarea'))
@@ -49,6 +52,40 @@ $(function(){
 	
 
 });
+
+function imageList(){
+
+	let bookId = document.getElementById("h_bookId").value;
+	let uploadResult = document.getElementById("uploadResult");
+	
+	$.getJSON("/getAttachList", {"bookId" : bookId}, function(arr){
+	
+		if(arr.length == 0){ //이미지가 없는 상품일때
+			return ;
+		}
+		
+		let str = "";
+		let obj = arr[0];
+		
+		let div = document.createElement("div");
+		let img = document.createElement("img");
+		
+		console.log(obj);
+		let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+		
+		div.id = "result_card";
+		div.dataset.path = obj.uploadPath;
+		div.dataset.uuid = obj.uuid;
+		div.dataset.filename= obj.fileName;
+		
+		img.src = "/display?fileName=" + fileCallPath;
+		
+		uploadResult.append(div);
+		div.append(img);
+		
+	});
+	
+}
 
 //대분류, 중분류, 소분류 파싱
 function makeCateArray(obj, array, cateList, tier){
@@ -206,3 +243,4 @@ function GoodsDetail(){
 	
 
 }
+

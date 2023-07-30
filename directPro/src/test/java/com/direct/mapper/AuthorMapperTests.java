@@ -113,6 +113,20 @@ public class AuthorMapperTests {
     	
     }
     
+    //작가 삭제
+    @Test
+    public void authorDeleteTest() throws Exception{
+    	
+    	int authorId = 41;
+    	
+    	int result = mapper.authorDelete(authorId);
+    	
+    	if(result == 1) {
+			System.out.println(authorId + "작가 삭제 성공");
+		}
+    	
+    }
+    
     
 }
 

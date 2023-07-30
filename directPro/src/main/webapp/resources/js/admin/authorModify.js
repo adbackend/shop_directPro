@@ -14,6 +14,11 @@ $(function(){
 		authroModify.authorModify(e);
 	});
 	
+	//작가 삭제
+	$("#deleteBtn").on("click", function(e){
+		authorModify.authorDelete(e);
+	});	
+	
 }); //function end
 
 
@@ -27,6 +32,7 @@ function AuthroModify(){
 		e.preventDefault();
 		
 		moveForm.action = "/admin/authorDetail";
+		moveForm.method = "get";
 		moveForm.submit();
 		
 	}
@@ -62,6 +68,13 @@ function AuthroModify(){
 		}else{
 			return false;
 		}
+		
+	}// function end
+	
+	//작가 삭제
+	this.authorDelete = function(e){
+		e.preventDefault();
+		moveForm.firstElementChild().removeChild();
 		
 	}
 

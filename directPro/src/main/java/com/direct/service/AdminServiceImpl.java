@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.direct.mapper.AdminMapper;
 import com.direct.model.BookVO;
@@ -20,10 +21,22 @@ public class AdminServiceImpl implements AdminService{
 	private AdminMapper adminMapper;
 	
 	//상품 등록
+	@Transactional
 	@Override
 	public void bookEnroll(BookVO bookVO) {
+		
 		log.info("bookEnroll...");
 		adminMapper.bookEnroll(bookVO);
+		
+		if(bookVO.getImageList() == null || bookVO.getImageList().size() <= 0) {
+			return ;
+		}
+		
+		bookVO.getImageList().forEach(attach -> {
+			attach.setBookId(bookVO.getBookId());
+			adminMapper.imageEnroll(attach);
+		});
+		
 	}
 	
 	//카테고리 목록

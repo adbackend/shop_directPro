@@ -2,6 +2,7 @@ package com.direct.mapper;
 
 import java.util.List;
 
+import com.direct.model.AttachImageVO;
 import com.direct.model.BookVO;
 import com.direct.model.CateVO;
 import com.direct.model.Criteria;
@@ -21,5 +22,7 @@ public interface AdminMapper {
 	public int goodsModify(BookVO book); //상품수정
 	
 	public int goodsDelete(int bookId); //상품삭제
+	
+	public void imageEnroll(AttachImageVO vo); //이미지 등록
 	
 }

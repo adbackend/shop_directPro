@@ -20,5 +20,7 @@ public interface AuthorMapper {
 	public AuthorVO authorGetDetail(int authorId); //작가상세
 	
 	public int authorModify(AuthorVO authroVO); //작가수정
+	
+	public int authorDelete(int authorId); //작가 삭제
 
 }

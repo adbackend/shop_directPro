@@ -6,7 +6,13 @@
 	
     <!-- 상품 등록 -->
     <insert id="bookEnroll">
-    	INSERT INTO book (	bookName,
+    
+    	<selectKey resultType="int" keyProperty="bookId" order="AFTER">
+    		SELECT "ISEQ$$_154823".CURRVAL FROM DUAL
+    	</selectKey>
+    	
+    	INSERT INTO book (	
+    						bookName,
     						authorId,
     						publeYear,
     						publisher,
@@ -17,7 +23,8 @@
     						bookIntro,
     						bookContents
     					)
-    			VALUES (	#{bookName},
+    			VALUES (	
+    						#{bookName},
     						#{authorId},
     						#{publeYear},
     						#{publisher},
@@ -119,6 +126,20 @@
     	WHERE bookId = #{bookId}
     </delete>
     
+    <!-- 이미지 등록 -->
+    <insert id="imageEnroll">
+    	INSERT INTO image(	bookId,
+    						fileName,
+    						uploadPath,
+    						uuid
+    					) 
+    			VALUES (
+    						#{bookId},
+    						#{fileName},
+    						#{uploadPath},
+    						#{uuid}
+    					)
+    </insert>
 </mapper>
 
 

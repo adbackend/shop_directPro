@@ -1,6 +1,7 @@
 package com.direct.model;
 
 import java.util.Date;
+import java.util.List;
 
 import lombok.Data;
 
@@ -29,6 +30,6 @@ public class BookVO {
 	private Date regDate; //등록날짜
 	private Date updateDate; //수정날짜
 	
+	private List<AttachImageVO> imageList; //이미지 정보
 	
-
 }

@@ -144,7 +144,16 @@
 					<textarea name="bookContents" id="bookContents_textarea" disabled>${goodsInfo.bookContents}</textarea>
 				</div>
 			</div>
-
+			<div class="form_section">
+				<div class="form_section_title">
+					<label>상품이미지</label>
+				</div>
+				<div class="form_section_content">
+					<div id="uploadResult">
+					</div>
+				</div>
+			</div>
+			
 			<div class="btn_section">
 				<button id="cancelBtn" class="btn">상품 목록</button>
 				<button id="modifyBtn" class="btn enroll_btn">수정</button>
