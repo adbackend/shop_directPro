@@ -25,41 +25,36 @@
 <script src="/resources/js/admin/goodsEnroll.js"></script>
 
 <script type="text/javascript">
-	$(document).ready(
-			function() {
-				// 	let eResult = ${enroll_result};
-				// 	checkResult(eResult);
+const config = {
+	dateFormat : "yy-mm-dd",
+	showOn : "button",
+	buttonText : "날짜선택",
+	prevText : '이전 달',
+	nextText : '다음 달',
+	monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
+			'8월', '9월', '10월', '11월', '12월' ],
+	monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
+			'7월', '8월', '9월', '10월', '11월', '12월' ],
+	dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
+	dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
+	dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
+	yearSuffix : '년',
+	changeMonth : true,
+	changeYear : true
+}
+	
+$(function(){
+	$("#publeYear").datepicker(config);
+});
+function checkResult(result) {
 
-				const config = {
-					dateFormat : "yy-mm-dd",
-					showOn : "button",
-					buttonText : "날짜선택",
-					prevText : '이전 달',
-					nextText : '다음 달',
-					monthNames : [ '1월', '2월', '3월', '4월', '5월', '6월', '7월',
-							'8월', '9월', '10월', '11월', '12월' ],
-					monthNamesShort : [ '1월', '2월', '3월', '4월', '5월', '6월',
-							'7월', '8월', '9월', '10월', '11월', '12월' ],
-					dayNames : [ '일', '월', '화', '수', '목', '금', '토' ],
-					dayNamesShort : [ '일', '월', '화', '수', '목', '금', '토' ],
-					dayNamesMin : [ '일', '월', '화', '수', '목', '금', '토' ],
-					yearSuffix : '년',
-					changeMonth : true,
-					changeYear : true
-				};
-
-				$("#publeYear").datepicker(config);
-
-			});
-	function checkResult(result) {
-
-		if (result === '') {
-			return;
-		}
-
-		alert("상품'" + eResult + "'을 등록하였습니다.");
-
+	if (result === '') {
+		return;
 	}
+
+	alert("상품'" + eResult + "'을 등록하였습니다.");
+}
+
 </script>
 <body>
 	<%@ include file="../includes/header.jsp"%>
@@ -186,7 +181,7 @@
 						<label>상품 이미지</label>
 					</div>
 					<div class="form_section_content">
-						<input type="file" id="fileItem" name="uploadFile" style="height : 30px" />
+						<input type="file" id="fileItem" name="uploadFile" style="height : 30px;" />
 						<div id="uploadResult">
 						</div>
 					</div>

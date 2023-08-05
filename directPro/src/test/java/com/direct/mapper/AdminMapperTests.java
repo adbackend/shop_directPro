@@ -129,6 +129,15 @@ public class AdminMapperTests {
 		mapper.imageEnroll(vo);
 		
 	}
+	
+	//지정 상품 이미지 삭제
+	@Test
+	public void deleteImageAllTest() {
+		
+		int bookId = 582;
+		
+		mapper.deleteImageAll(bookId);;
+	}
 }
 
 

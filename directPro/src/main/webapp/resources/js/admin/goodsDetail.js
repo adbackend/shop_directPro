@@ -1,6 +1,6 @@
 $(function(){
 	
-	imageList();
+	imageList(); // 등록된 이미지 불러오기	
 	
 	/* 책 소개 */
 	ClassicEditor

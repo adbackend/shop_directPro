@@ -407,6 +407,7 @@ function GoodsEnroll(){
 let regex = new RegExp("(.*?)\.(jpg|png|jpeg)$");
 let maxSize = 1048576; //1MB
 
+//파일 유효성검사
 function fileCheck(fileType, fileSize){
 
 	let ck = true;
@@ -486,7 +487,7 @@ function showUploadImage(uploadResultArr){
 	uploadResult.append(div1);
 	div1.append(img, div2, input1, input2, input3);
 	
-}
+} //function end
 
 
 

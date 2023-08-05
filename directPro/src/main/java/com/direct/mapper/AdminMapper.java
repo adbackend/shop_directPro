@@ -25,4 +25,7 @@ public interface AdminMapper {
 	
 	public void imageEnroll(AttachImageVO vo); //이미지 등록
 	
+	public void deleteImageAll(int bookId); // 지정 상품 이미지 전체 삭제
+	
+	
 }

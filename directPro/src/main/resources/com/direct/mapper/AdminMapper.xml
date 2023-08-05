@@ -140,6 +140,12 @@
     						#{uuid}
     					)
     </insert>
+    
+    <!-- 상품 이미지 삭제 -->
+    <delete id="deleteImageAll">
+    	DELETE FROM image 
+    	WHERE bookId = #{bookId}
+    </delete>
 </mapper>
 
 

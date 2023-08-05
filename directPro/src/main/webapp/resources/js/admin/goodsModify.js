@@ -1,4 +1,7 @@
 $(function(){
+
+	imageList(); // 등록된 이미지 불러오기
+	
 	/* 책 소개 */
 	ClassicEditor
 		.create(document.querySelector('#bookIntro_textarea'))
@@ -62,8 +65,75 @@ $(function(){
 		goodsModify.goodsDelete(e);
 	});
 	
+	//파일업로드
+	$("#fileItem").on("change", function(e){
+		goodsModify.fileUpload(e);
+	});
+	
+	//이미지 삭제버튼 클릭시 
+	$("#uploadResult").on("click", "#imgDeleteBtn", function(e){
+		deleteFile();
+	});
+	
 
 });
+
+function imageList(){
+
+	let bookId = document.getElementById("bookId").value;
+	let uploadResult = document.getElementById("uploadResult");
+	
+	$.getJSON("/getAttachList", {"bookId" : bookId}, function(arr){
+	
+		if(arr.length == 0){ //이미지가 없는 상품일때
+			return ;
+		}
+		
+		let str = "";
+		let obj = arr[0];
+		
+		let div = document.createElement("div");
+		let div2 = document.createElement("div");
+		let img = document.createElement("img");
+		let input1 = document.createElement("input");
+		let input2 = document.createElement("input");
+		let input3 = document.createElement("input");
+		
+		console.log(obj);
+		let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+		
+		div.id = "result_card";
+		div.dataset.path = obj.uploadPath;
+		div.dataset.uuid = obj.uuid;
+		div.dataset.filename= obj.fileName;
+		
+		div2.className = "imgDelete";
+		div2.id = "imgDeleteBtn";
+		div2.dataset.file = fileCallPath
+		div2.innerHTML = "X";	
+		
+		input1.type = "hidden";
+		input1.name = "imageList[0].fileName";
+		input1.value = obj.fileName;
+		
+		input2.type = "hidden";
+		input2.name = "imageList[0].uuid";
+		input2.value = obj.uuid;
+			
+		input3.type = "hidden";
+		input3.name = "imageList[0].uploadPath";
+		input3.value = obj.uploadPath;		
+		
+		img.src = "/display?fileName=" + fileCallPath;
+		
+		uploadResult.append(div);
+		div.append(img, div2, input1, input2, input3);
+		
+		
+	});
+	
+}
+
 
 //할인율 계산
 function calcRate(){
@@ -444,12 +514,170 @@ function GoodsModify(){
 	} // function end
 	
 
+	
+	//파일 업로드
+	this.fileUpload = function(e){
+	
+		let ele = document.getElementById('uploadResult');
+		let eleCount = ele.childElementCount;
+		
+		console.log("이미지 length : " + eleCount);
+		
+		if(eleCount > 0){ //이미지가 0보다 클경우
+			console.log("으아아1");
+			deleteFile();
+			console.log("으아아2");
+		}
+		
+		let formData = new FormData();
+
+		let fileInput = document.getElementById("fileItem");
+		let fileList = fileInput.files[0];
+		
+		formData.append("uploadFile", fileList);
+		
+		console.log(fileList);
+		console.log(fileList.type);
+		
+		let fileCkResult = true; // 이미지 파일인지 체크
+		fileCkResult = fileCheck(fileList.type, fileList.size);
+		
+		
+		// processData란? 
+		// 서버로 전송할 데이터를 queryStirng 형태로 변환할지 여부
+		// 일반적으로 서버에 전달되는 데이터는 query string 형태로 전달되기 때문에,
+		// 파일전송의 경우 이를 하지 않아야 되므로 processData : false로 설정
+		
+		// contentType란?
+		// default값이 "application/x-www-form-urlencoded; charset=UTF-8" 이다
+		// 이를 "multipart/form-data"로 전송되게 false로 바꿔주는 역할
+		
+		if(fileCkResult){
+			$.ajax({
+				url : "/admin/uploadAjaxAction",
+				type : "POST",
+				processData : false,
+				contentType : false, //서버로 전송되는 데이터
+				data : formData,
+				dataType : "json", // 서버로부터 반환받을 데이터 타입
+				success : function(result){
+					console.log(result);
+					showUploadImage(result);
+				},
+				error : function(result){
+					alert("이미지 파일이 아닙니다.");
+					console.log(result);
+				}
+			}); // ajax end
+		}else{
+			document.getElementById("fileItem").value = "";
+			return false;
+		}
+		
+	}// function end
+	
+
 }
 
+let regex = new RegExp("(.*?)\.(jpg|png|jpeg)$");
+let maxSize = 1048576; //1MB
+
+//파일 유효성검사
+function fileCheck(fileType, fileSize){
+
+	let ck = true;
+	
+	if(!regex.test(fileType)){
+
+		alert("해당 종류의 파일은 업로드할 수 없습니다.");
+		ck = false;
+		
+		return ck;
+	}
+
+	if(fileSize > maxSize){
+
+		alert("파일사이즈 초과");
+		ck = false;
+		
+		return ck;
+	}
+	
+	console.log(ck+" 11");
+	if(!ck){
+	console.log(ck +" 22");
+		document.getElementById("fileItem").value = "";
+	}	
+	
+	return ck;
+	
+} // function end
+
+//이미지 미리보기
+function showUploadImage(uploadResultArr){
+	
+	//데이터를 전달받지 못하면 return
+	if(!uploadResultArr || uploadResultArr.length == 0){
+		return;	
+	}
+	
+	let uploadResult = document.getElementById("uploadResult");
+	let obj = uploadResultArr[0];
+	
+	// encodeURIComponent() 메서는 '/' 와 '\' 문자 또한 인코딩한다
+	//encodeURIComponent()적용전	
+//	let fileCallPath = obj.uploadPath.replaceAll("\\","/") + "/s_" + obj.uuid + "_" + obj.fileName; 
+	
+	let fileCallPath = encodeURIComponent(obj.uploadPath + "/s_" + obj.uuid + "_" + obj.fileName);
+	
+	
+	let div1 = document.createElement("div");
+	let div2 = document.createElement("div");
+	let input1 = document.createElement("input");
+	let input2 = document.createElement("input");
+	let input3 = document.createElement("input");
+	
+	let img = document.createElement("img");
+	
+	div1.id = "result_cart";
+	
+	img.src = "/display?fileName="+fileCallPath;
+	
+	div2.id = "imgDeleteBtn";
+	div2.className = "imgDelete";
+	div2.dataset.file = fileCallPath;
+	div2.innerHTML = "X";
+	
+	input1.type = "hidden";
+	input1.name = "imageList[0].fileName";
+	input1.value = obj.fileName;
+	
+	input2.type = "hidden";
+	input2.name = "imageList[0].uuid";
+	input2.value = obj.uuid;
+		
+	input3.type = "hidden";
+	input3.name = "imageList[0].uploadPath";
+	input3.value = obj.uploadPath;	
+	
+	uploadResult.append(div1);
+	div1.append(img, div2, input1, input2, input3);
+	
+} //function end
 
 
+//이미지 삭제 버튼 
+function deleteFile(){
+//	let targetDiv = document.getElementById("result_card"); //이미지 div영역
+//	targetDiv.remove();
 
+	console.log("왱11...");
+	let targetDiv = document.getElementById("uploadResult");
+	targetDiv.firstChild.remove();
+	
+	console.log("왱22...");
 
+}
 
 
 
