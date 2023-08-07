@@ -146,6 +146,12 @@
     	DELETE FROM image 
     	WHERE bookId = #{bookId}
     </delete>
+    
+    <!-- 어제 날짜 이미지 리스트 -->
+    <select id="checkFile" resultType="com.direct.model.AttachImageVO">
+    	SELECT * FROM image 
+    	WHERE uploadpath = TO_CHAR(sysdate-1, 'yyyy\mm\dd')
+    </select>
 </mapper>
 
 
